@@ -117,9 +117,11 @@ def load_data():
     if data["df_detail"] is None and data["df_annual"] is None:
         data["df_detail"], data["df_annual"] = _generate_synthetic_data()
     if data["model"] is None:
-        data["model"] = _generate_synthetic_model(data["df_detail"] or data["df_annual"])
+        df_for_model = data["df_detail"] if data["df_detail"] is not None else data["df_annual"]
+        data["model"] = _generate_synthetic_model(df_for_model)
     if data["metrics"] is None:
-        data["metrics"] = _generate_synthetic_metrics(data["model"], data["df_detail"] or data["df_annual"])
+        df_for_metrics = data["df_detail"] if data["df_detail"] is not None else data["df_annual"]
+        data["metrics"] = _generate_synthetic_metrics(data["model"], df_for_metrics)
 
     return data
 
