@@ -193,33 +193,6 @@ def _generate_synthetic_metrics(model, df):
 # ESTADISTICA: Intervalos de prediccion para regresion lineal
 # ---------------------------------------------------------------------------
 
-def prediction_interval(model, X_train, X_new, alpha=0.05):
-    """
-    Calcula intervalo de prediccion al (1-alpha)% para regresion lineal simple.
-
-    IC = y_hat ± t_{n-2, 1-alpha/2} * SE * sqrt(1 + 1/n + (x_new - x_bar)^2 / Sxx)
-
-    Donde:
-      SE = sqrt(MSE) = sqrt(SUM(y_i - y_hat_i)^2 / (n-2))
-      Sxx = SUM(x_i - x_bar)^2
-    """
-    X_train = np.asarray(X_train).flatten()
-    x_new = float(X_new)
-    n = len(X_train)
-
-    y_hat_train = model.predict(X_train.reshape(-1, 1))
-    y_train = y_hat_train  # placeholder, se pasa aparte
-
-    x_bar = np.mean(X_train)
-    Sxx = np.sum((X_train - x_bar) ** 2)
-
-    y_pred = float(model.predict([[x_new]])[0])
-
-    # MSE from training data
-    residuals = X_train  # dummy, we'll fix below
-    return {"pred": y_pred, "se": 0, "lower": y_pred, "upper": y_pred}
-
-
 def compute_ols_statistics(X, y):
     """
     Calcula estadisticas completas de regresion OLS usando formulas matriciales.
@@ -290,10 +263,11 @@ def compute_ols_statistics(X, y):
 def predict_with_interval(ols_stats, X_new, alpha=0.05):
     """
     Prediccion puntual + intervalo de prediccion al (1-alpha)%.
+    Los valores mínimos son 0 (no puede haber producción negativa).
     """
     x_new = float(X_new)
     n = ols_stats["n"]
-    y_pred = ols_stats["b0"] + ols_stats["b1"] * x_new
+    y_pred = max(0, ols_stats["b0"] + ols_stats["b1"] * x_new)
 
     x_bar = np.mean(ols_stats["X_design"][:, 1])
     Sxx = np.sum((ols_stats["X_design"][:, 1] - x_bar) ** 2)
@@ -301,8 +275,8 @@ def predict_with_interval(ols_stats, X_new, alpha=0.05):
     se_fit = np.sqrt(ols_stats["MSE"] * (1 + 1/n + (x_new - x_bar)**2 / Sxx))
     t_crit = st.t.ppf(1 - alpha/2, n - 2)
 
-    lower = y_pred - t_crit * se_fit
-    upper = y_pred + t_crit * se_fit
+    lower = max(0, y_pred - t_crit * se_fit)
+    upper = max(0, y_pred + t_crit * se_fit)
 
     return {
         "pred": float(y_pred),
