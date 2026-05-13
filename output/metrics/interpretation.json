@@ -1,0 +1,10 @@
+{
+  "ecuacion": "Y = 18791.1719 + 0.099520 * X",
+  "interpretacion_coeficiente": "Por cada ton de cana molida, se producen 0.0995 ton de azucar",
+  "r2_interpretacion": "El modelo explica el 76.84% de la variabilidad en la produccion de azucar",
+  "pronostico": {
+    "siguiente_cana": 5181641.763939138,
+    "siguiente_azucar": 534467.7570894583,
+    "tendencia_cana": 0.9053459037640481
+  }
+}

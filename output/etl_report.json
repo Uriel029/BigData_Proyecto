@@ -1,0 +1,22 @@
+{
+  "total_registros":535,
+  "total_zafras":11,
+  "total_ingenios":108,
+  "columnas":[
+    "ingenio",
+    "zafra",
+    "cana_molida_bruta",
+    "cana_molida_neta",
+    "superficie_cosechada",
+    "azucar_producida_total",
+    "azucar_producida_refinada",
+    "azucar_producida_estandar",
+    "azucar_producida_blanca_especial",
+    "azucar_producida_mascabado",
+    "rendimiento_campo",
+    "rendimiento_fabrica",
+    "rendimiento_agroindustrial",
+    "eficiencia_extraccion",
+    "anio_inicio"
+  ]
+}

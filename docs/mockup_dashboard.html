@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup - Dashboard Infocana</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F8F9FA; color: #2C3E50; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+
+.header {
+  background: linear-gradient(135deg, #2C3E50, #2E86AB);
+  padding: 20px 28px; border-radius: 12px; margin-bottom: 20px;
+  color: white;
+}
+.header h1 { font-size: 24px; font-weight: 700; margin: 0; }
+.header p { font-size: 14px; opacity: 0.9; margin: 4px 0 0 0; }
+
+.layout { display: flex; gap: 16px; }
+.sidebar {
+  width: 260px; background: white; border-radius: 12px;
+  padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #E8ECF0; flex-shrink: 0;
+}
+.sidebar h3 { color: #2C3E50; font-weight: 700; margin-top: 0; }
+.sidebar hr { border: none; border-top: 1px solid #E8ECF0; margin: 12px 0; }
+.sidebar label { font-size: 13px; font-weight: 600; color: #555; }
+.sidebar select, .sidebar input {
+  width: 100%; padding: 8px 12px; border: 1px solid #DDD;
+  border-radius: 6px; margin: 4px 0 12px 0; font-size: 13px;
+}
+.sidebar button {
+  width: 100%; padding: 10px; background: #2E86AB; color: white;
+  border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+}
+.main { flex: 1; min-width: 0; }
+
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.kpi-card {
+  border-radius: 12px; padding: 18px 22px; color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1); text-align: center;
+}
+.kpi-card .label { font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
+.kpi-card .value { font-size: 26px; font-weight: 700; }
+.kpi-card .sub { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+.kpi-1 { background: linear-gradient(135deg, #2E86AB, #1A6B8A); }
+.kpi-2 { background: linear-gradient(135deg, #A23B72, #7A2B5A); }
+.kpi-3 { background: linear-gradient(135deg, #F18F01, #C57000); }
+.kpi-4 { background: linear-gradient(135deg, #2ECC71, #1E9B56); }
+
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-card {
+  background: white; border-radius: 12px; padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #E8ECF0;
+}
+.chart-card h5 { color: #2C3E50; font-weight: 600; margin: 0 0 12px 0; }
+.chart-placeholder {
+  background: linear-gradient(135deg, #f0f4f8, #e8edf2);
+  border-radius: 8px; height: 300px; display: flex;
+  align-items: center; justify-content: center;
+  color: #7F8C8D; font-size: 14px;
+  border: 2px dashed #d0d5db;
+}
+
+.full-row { margin-bottom: 16px; }
+
+.model-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.footer { text-align: center; padding: 20px 0; color: #7F8C8D; font-size: 12px; }
+
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .chart-row { grid-template-columns: 1fr; }
+  .model-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Analisis Predictivo de Produccion de Azucar en Mexico</h1>
+    <p>Modelo de regresion lineal sobre datos historicos de Infocana (2012-2026)</p>
+  </div>
+
+  <div class="layout">
+    <div class="sidebar">
+      <h3>Filtros</h3>
+      <hr>
+      <label>Zafra (periodo):</label>
+      <select><option>Todas</option><option>2024-2025</option><option>2025-2026</option></select>
+
+      <label>Ingenio azucarero:</label>
+      <select><option>Todos</option><option>Atencingo</option><option>Alianza Popular</option></select>
+
+      <label>Cana molida neta (ton):</label>
+      <input type="number" value="50000">
+
+      <button>Predecir produccion</button>
+      <hr>
+      <p style="color: #7F8C8D; font-size: 12px; text-align: center;">
+        Dashboard v1.0<br>Fuente: Infocana / CONADESUCA
+      </p>
+    </div>
+
+    <div class="main">
+      <div class="kpi-row">
+        <div class="kpi-card kpi-1">
+          <div class="label">Produccion Total</div>
+          <div class="value">58.4M ton</div>
+          <div class="sub">(14 zafras seleccionadas)</div>
+        </div>
+        <div class="kpi-card kpi-2">
+          <div class="label">Rendimiento Promedio</div>
+          <div class="value">11.35%</div>
+          <div class="sub">% azucar / cana molida</div>
+        </div>
+        <div class="kpi-card kpi-3">
+          <div class="label">R² del Modelo</div>
+          <div class="value">0.8691</div>
+          <div class="sub">Coeficiente de determinacion</div>
+        </div>
+        <div class="kpi-card kpi-4">
+          <div class="label">MAE</div>
+          <div class="value">7,612 ton</div>
+          <div class="sub">Precision del modelo</div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <h5>Regresion Lineal: Cana Molida vs Azucar Producida</h5>
+          <div class="chart-placeholder">[Grafica interactiva: scatter + recta de regresion]</div>
+        </div>
+        <div class="chart-card">
+          <h5>Valores Reales vs Predichos</h5>
+          <div class="chart-placeholder">[Grafica interactiva: prediccion vs realidad]</div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <h5>Serie Temporal de Produccion (2012-2026)</h5>
+          <div class="chart-placeholder">[Grafica interactiva: temporal con dos ejes Y]</div>
+        </div>
+        <div class="chart-card">
+          <h5>Pronostico por Ingenio - Top 15</h5>
+          <div class="chart-placeholder">[Grafica de barras horizontal: Top ingenios]</div>
+        </div>
+      </div>
+
+      <div class="chart-card full-row">
+        <h5>Datos Detallados de Produccion</h5>
+        <div class="chart-placeholder" style="height: 200px;">
+          [Tabla interactiva con filtros: Ingenio, Zafra, Cana, Azucar, Superficie, Rendimiento]
+        </div>
+      </div>
+
+      <div class="model-row">
+        <div class="chart-card">
+          <h5>Ecuacion del Modelo</h5>
+          <div style="text-align: center; padding: 20px;">
+            <p style="font-size: 18px; font-family: monospace; background: #F5F7FA; padding: 15px; border-radius: 8px; border-left: 4px solid #2E86AB;">
+              <strong>Y</strong> = 1312.5467 + <strong>(0.112181)</strong> · X
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+              <div style="background: #F0F4F8; padding: 10px; border-radius: 6px;">
+                <small>Intercepto (B0)</small><br><strong>1312.5467</strong>
+              </div>
+              <div style="background: #F0F4F8; padding: 10px; border-radius: 6px;">
+                <small>Coeficiente (B1)</small><br><strong>0.112181</strong>
+              </div>
+              <div style="background: #F0F4F8; padding: 10px; border-radius: 6px;">
+                <small>R² (prueba)</small><br><strong>0.8691</strong>
+              </div>
+              <div style="background: #F0F4F8; padding: 10px; border-radius: 6px;">
+                <small>MAE</small><br><strong>7,612 ton</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h5>Prediccion Personalizada</h5>
+          <div style="padding: 10px; background: linear-gradient(135deg, rgba(46,134,171,0.13), rgba(162,59,114,0.07)); border-radius: 10px; border: 1px solid rgba(46,134,171,0.27);">
+            <p style="color: #7F8C8D; font-size: 13px;">Valor ingresado de cana molida neta:</p>
+            <p style="font-size: 22px; font-weight: 700; margin: 0 0 15px 0;">50,000 ton</p>
+            <p style="color: #7F8C8D; font-size: 13px;">Calculo: 1312.5467 + (0.112181 × 50,000) =</p>
+            <p style="font-size: 28px; font-weight: 700; color: #C73E1D; margin: 5px 0 0 0;">6,921.60 ton de azucar</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Proyecto Universitario - Big Data - "Analisis predictivo de la produccion de azucar en Mexico mediante regresion lineal y procesamiento ETL con datos abiertos de Infocana"
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
