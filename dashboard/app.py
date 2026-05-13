@@ -132,6 +132,7 @@ def _generate_synthetic_data():
     for z in zafras:
         base_cana = np.random.uniform(40000, 70000)
         for ing in ingenios:
+            cn = base_cana * np.random.uniform(0.8, 1.2)
             az = cn * np.random.uniform(10.5, 12.8) / 100
             sup = cn / np.random.uniform(55, 72)
             rend_campo = np.random.uniform(55, 75)
